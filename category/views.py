@@ -20,4 +20,9 @@ def ajax_method(request):
         uploaded = request.POST.get('upload_data', None)
         uploaded_list = json.loads(uploaded)
         print(uploaded_list)
+        message = "통신 성공"
+        context = {"message": message}
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+def upload_loading(request):
     return render(request, 'category/loading.html')
