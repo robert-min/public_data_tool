@@ -3,24 +3,19 @@ import json
 from collections import deque
 import elasticsearch7
 from elasticsearch7 import helpers
+import warnings
 
-def readline(count, csv_data):
-    for line in csv_data:
-        i = 0
-        line_data = {}
-        while i != count:
-            line_data[header[i]] = line[i]
-            i += 1
-        yield line_data
+def readline(all_data):
+    # 수정 : jqeury에서 마지막 빈데이터 전송하는 부분 처리 필요!!(현재는 파이썬 코드에서 처리)
+    for line in all_data[:-1]:
+        yield line
 
-with open("./test_file/강원도_동해시_관광객수 정보_10_21_2021.csv", "r") as file:
-    csv_reader = reader(file)
-    header = next(csv_reader)
 
+def push_elasticsearch(data):
     es = elasticsearch7.Elasticsearch(["http://localhost:9200"])
 
-    #
     # tourist => web에서 인덱스 명 설정
-    es.indices.delete(index="tourist", ignore=404)
-    deque(helpers.parallel_bulk(es, readline(len(header), csv_reader), index="tourist"), maxlen=0)
+    es.indices.delete(index="test", ignore=404)
+    deque(helpers.parallel_bulk(es, readline(data), index="test"), maxlen=0)
     es.indices.refresh()
+
