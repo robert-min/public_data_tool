@@ -16,6 +16,7 @@ def upload_csv(request):
 # ajax로 받아온 json 데이터 처리
 @csrf_exempt
 def ajax_method(request):
+    print("test")
     if request.method == "POST":
         uploaded = request.POST.get('upload_data', None)
         uploaded_list = json.loads(uploaded)
