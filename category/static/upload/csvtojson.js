@@ -2,7 +2,6 @@
 // 파일 추가 버튼을 누르면 handleFileSelect 함수 호출
 $(function init(){
     document.getElementById("formFileLg").addEventListener('change', handleFileSelect, false);
-    console.log("Hello")
 });
 
 function handleFileSelect(event){
@@ -33,11 +32,10 @@ function handleFileLoad(event){
     let uploaded = event.target.result;
     // csvJson 함수 호출
     let upload_data = csvJson(uploaded)
-    console.log(upload_data)
 
     $.ajax({
         // 요청될 URL 주소
-        url: '{% url "ajax_method" %}',
+        url: 'ajax_method',
         type: "POST",
         dataType: "JSON",
         data: {
