@@ -1,7 +1,7 @@
 
 // 파일 추가 버튼을 누르면 handleFileSelect 함수 호출
 $(function init(){
-    document.getElementById('formFileLg').addEventListener('change', handleFileSelect, false);
+    document.getElementById("formFileLg").addEventListener('change', handleFileSelect, false);
 });
 
 function handleFileSelect(event){
@@ -35,19 +35,20 @@ function handleFileLoad(event){
 
     $.ajax({
         // 요청될 URL 주소
-        url: "ajax_method/",
+        url: 'ajax_method',
         type: "POST",
         dataType: "JSON",
         data: {
             'upload_data': upload_data,
             csrfmiddlewaretoken: "{{ csrf_token }}"
         },
-        headers: { "X-CSRFTOKEN": "{{ csrf_token }}"},
+        headers: { "X-CSRFToken": "{{ csrf_token }}"},
 
         success: function (data) {
             const port_data = JSON.stringify(data);
             var port_data_json = JSON.parse(port_data);
         },
+
         error : function (xhr, textStatus, thrownError) {
             alert("Error. Can't send URL to Django : " + xhr.status + ":" + xhr.responseText);
         }
